@@ -6,7 +6,17 @@ public class Patient {
 
     public Patient(int idpatient, String nom, String prenom, String adresse, String ville, String telephone, String email, String dateNaissance, String codePostal, String sexe, int idmedecin) {
         super();
-        
+        this.idpatient = idpatient;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.ville = ville;
+        this.telephone = telephone;
+        this.email = email;
+        this.dateNaissance = dateNaissance;
+        this.codePostal = codePostal;
+        this.sexe = sexe;
+        this.idmedecin = idmedecin;
     }
 
     public Patient(String nom, String prenom, String adresse, String ville, String telephone, String email, String dateNaissance, String codePostal, String sexe, int idmedecin) {

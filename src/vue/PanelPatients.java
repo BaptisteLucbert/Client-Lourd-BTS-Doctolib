@@ -460,12 +460,13 @@ public class PanelPatients extends PanelPrincipal implements ActionListener, Key
 
 			//on vérifie les données avant insertion dans la base 
 			if (ok) {
+              
 				//on enregistre le new patient dans la base 
-				Patient unPatient = new Patient(nom, prenom, adresse, codePostal, ville, telephone, email, dateNaissance, sexe, idmedecin);
+				Patient unPatient = new Patient(nom, prenom, adresse, ville, telephone, email, dateNaissance,codePostal, sexe, idmedecin);
 				Controleur.ajouterPatient(unPatient); 
 			
 				//récupération de l'ID donné par mysql 
-				unPatient = Controleur.selectWherePatient(nom, prenom, adresse, codePostal, ville, telephone, email, dateNaissance, sexe); 
+				unPatient = Controleur.selectWherePatient(nom, prenom, adresse, ville, telephone, email, dateNaissance,codePostal, sexe); 
 			
 				JOptionPane.showMessageDialog(this, "Patient inséré avec succés dans la BDD");
 
