@@ -17,6 +17,11 @@ CREATE TABLE patient (
     PRIMARY KEY (idpatient),
     FOREIGN KEY (idmedecin) REFERENCES medecin(idmedecin)
 );
+CREATE TABLE professions (
+    idprofession INT(3) NOT NULL AUTO_INCREMENT,
+    libelle VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idprofession)
+);
 
 CREATE TABLE medecin (
     idmedecin INT(3) NOT NULL AUTO_INCREMENT,
@@ -24,9 +29,10 @@ CREATE TABLE medecin (
     prenom VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     tel VARCHAR(50) NOT NULL,
-    specialite VARCHAR(50) NOT NULL,
+    idprofession INT(3) NOT NULL,
     faculte VARCHAR(50) NOT NULL,
-    PRIMARY KEY (idmedecin)
+    PRIMARY KEY (idmedecin),
+    FOREIGN KEY (idprofession) REFERENCES professions(idprofession)
 );
 
 CREATE TABLE rendezvous (
@@ -64,11 +70,6 @@ CREATE TABLE personne (
     PRIMARY KEY (idpersonne)
 );
 
-CREATE TABLE professions (
-    idprofession INT(3) NOT NULL AUTO_INCREMENT,
-    libelle VARCHAR(50) NOT NULL,
-    PRIMARY KEY (idprofession)
-);
 
 INSERT INTO professions VALUES (null, 'Cardiologue');
 INSERT INTO professions VALUES (null, 'Dentiste');
@@ -115,10 +116,18 @@ INSERT INTO personne VALUES (null, 'Wilkosz', 'Matthieu', 'mwilkosz@gmail.com', 
 INSERT INTO personne VALUES (null, 'Lucbert', 'Baptiste', 'blucbert@gmail.com', 'Superb@pt95!', '0615141213', 'Admin');
 INSERT INTO personne VALUES (null, 'Youssoufa', 'Ilyes', 'iyoussoufa@gmail.com', 'Superb@pt95!', '0615141213', 'Admin');
 
-INSERT INTO medecin VALUES (null, 'Dupont', 'Jean', 'jean.dupont@example.com', '0123456789', 'Cardiologue', 'Faculte de Paris');
-INSERT INTO medecin VALUES (null, 'Martin', 'Sophie', 'sophie.martin@example.com', '0234567890', 'Dentiste', 'Faculte de Lyon');
-INSERT INTO medecin VALUES (null, 'Lefevre', 'Pierre', 'pierre.lefevre@example.com', '0345678901', 'Gynecologue', 'Faculte de Marseille');
+INSERT INTO medecin VALUES (null, 'Dupont', 'Jean', 'jean.dupont@example.com', '0123456789', 1, 'Faculte de Paris');
+INSERT INTO medecin VALUES (null, 'Martin', 'Sophie', 'sophie.martin@example.com', '0234567890', 2, 'Faculte de Lyon');
+INSERT INTO medecin VALUES (null, 'Lefevre', 'Pierre', 'pierre.lefevre@example.com', '0345678901', 3, 'Faculte de Marseille');
 
 INSERT INTO patient VALUES (null, 'Dubois', 'Alice', '123 Rue de la Paix', 'Paris', '0123456789', 'alice.dubois@example.com', '1990-05-15', '75001', 'Femme', 1);
 INSERT INTO patient VALUES (null, 'Bernard', 'Paul', '456 Avenue des Fleurs', 'Nice', '0234567890', 'paul.bernard@example.com', '1985-10-20', '06000', 'Homme', 2);
 INSERT INTO patient VALUES (null, 'Leroux', 'Marie', '789 Rue du Chateau', 'Lyon', '0345678901', 'marie.leroux@example.com', '1998-03-08', '69001', 'Femme', 3);
+
+INSERT INTO rendezvous VALUES (null, '2021-05-15', '10:00:00', 'attente', 1, 1);
+INSERT INTO rendezvous VALUES (null, '2021-05-20', '14:00:00', 'confirme', 2, 2);
+INSERT INTO rendezvous VALUES (null, '2021-05-25', '16:00:00', 'annule', 3, 3);
+
+INSERT INTO prescription VALUES (null, '2021-05-15', 'Doliprane', 1, 1, '1 comprime 3 fois par jour');
+INSERT INTO prescription VALUES (null, '2021-05-20', 'Paracetamol', 2, 2, '1 comprime 2 fois par jour');
+INSERT INTO prescription VALUES (null, '2021-05-25', 'Ibuprofene', 3, 3, '1 comprime 3 fois par jour');

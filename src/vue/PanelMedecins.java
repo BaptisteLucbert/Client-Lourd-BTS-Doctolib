@@ -314,7 +314,7 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
             matrice[i][2] = unMedecin.getPrenom();
             matrice[i][3] = unMedecin.getMail();
             matrice[i][4] = unMedecin.getTel();
-            matrice[i][5] = unMedecin.getSpecialite();
+            matrice[i][5] = unMedecin.getIdprofession();
             matrice[i][6] = unMedecin.getFaculte();
 			i++;
 		}
@@ -366,13 +366,13 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
             String prenom = this.txtPrenom.getText();
             String tel = this.txtTel.getText();
             String email = this.txtMail.getText();
-            String specialite = this.cbSpecialite.getSelectedItem().toString();
+            int idprofession = this.cbSpecialite.getSelectedIndex();
             String faculte = this.txtFaculte.getText();
 
             if (nom.equals("") || prenom.equals("") || tel.equals("") || email.equals("")) {
                 JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
                 ok = false;
-            } else if (Controleur.selectWhereMedecin(nom, prenom, email, tel, specialite, faculte) != null) {
+            } else if (Controleur.selectWhereMedecin(nom, prenom, email, tel, idprofession, faculte) != null) {
                 JOptionPane.showMessageDialog(this, "Ce médecin existe déjà", "Erreur", JOptionPane.ERROR_MESSAGE);
                 ok = false;
             } else if (!Pattern.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", email)) {
@@ -386,15 +386,15 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
 			//on vérifie les données avant insertion dans la base 
 			if (ok) {
 				//on enregistre le new medecin dans la base 
-				Medecin unMedecin = new Medecin(nom, prenom, tel, email, specialite, faculte);
+				Medecin unMedecin = new Medecin(nom, prenom, tel, email, idprofession, faculte);
 				Controleur.insertMedecin(unMedecin); 
 			
 				//récupération de l'ID donné par mysql 
-				unMedecin = Controleur.selectWhereMedecin(nom, prenom, email, tel, specialite, faculte); 
+				unMedecin = Controleur.selectWhereMedecin(nom, prenom, email, tel, idprofession, faculte); 
 			
 				JOptionPane.showMessageDialog(this, "Medecin inséré avec succés dans la BDD");
 				//insertion dans l'affichage graphique 
-				Object ligne[]= {unMedecin.getIdmedecin(), nom, prenom, tel, email, specialite, faculte};
+				Object ligne[]= {unMedecin.getIdmedecin(), nom, prenom, tel, email, idprofession, faculte};
 				this.unTableau.ajouterLigne(ligne);
 				lbMedecin.setText("Nombre de médecins disponibles :"+unTableau.getRowCount());
                 
@@ -422,7 +422,7 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
             String prenom = this.txtPrenom.getText();
             String tel = this.txtTel.getText();
             String email = this.txtMail.getText();
-            String specialite = this.cbSpecialite.getSelectedItem().toString();
+            int getIdprofession = cbSpecialite.getSelectedIndex();
             String faculte = this.txtFaculte.getText();
 			
 			int numLigne = 0 ; 
@@ -430,11 +430,11 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
 			numLigne = tableMedecin.getSelectedRow();
 			idmedecin= Integer.parseInt(tableMedecin.getValueAt(numLigne, 0).toString());
 
-            Medecin unMedecin = new Medecin(idmedecin, nom, prenom, tel, email, specialite, faculte); 
+            Medecin unMedecin = new Medecin(idmedecin, nom, prenom, tel, email, getIdprofession, faculte); 
 			//modification dans la base de données 
 			Controleur.updateMedecin(unMedecin);
 			//modification dans l'affichage 
-			Object ligne []= {idmedecin, nom, prenom, tel, email, specialite, faculte};
+			Object ligne []= {idmedecin, nom, prenom, tel, email, getIdprofession, faculte};
 			this.unTableau.modifierLigne(numLigne, ligne);
 			JOptionPane.showMessageDialog(this, "Modification effectuée");
 			this.viderChamps();

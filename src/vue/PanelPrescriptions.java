@@ -252,14 +252,14 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
 				if (e.getClickCount()>=2) {
 					numLigne = tablePrescription.getSelectedRow(); 
 					idprescription= Integer.parseInt(tablePrescription.getValueAt(numLigne, 0).toString());
-					int reponse = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer ce prescription ?", 
+					int reponse = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer cette prescription ?", 
 							"Suppression prescription", JOptionPane.YES_NO_OPTION); 
 					if (reponse == 0) {
 						//suppression dans la BDD
 						Controleur.deletePrescription(idprescription);
 						//suppression dans l'affichage de la table 
 						unTableau.supprimerLigne(numLigne);
-						lbPrescription.setText("Nombre de prescriptions disponibles :"+unTableau.getRowCount());
+						lbPrescription.setText("Nombre de prescriptions disponibles : "+unTableau.getRowCount());
 					}
 				}
 				else {

@@ -88,5 +88,4 @@ public class Tableau extends AbstractTableModel
 		this.donnees = matrice ; 
 		this.fireTableDataChanged();
 	}
-	
 }

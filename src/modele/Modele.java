@@ -175,7 +175,7 @@ public class Modele {
 
     /******************* Medecins *******************/
     public static void updateMedecin(Medecin unMedecin) {
-        String requete = "update medecin set nom = '" + unMedecin.getNom() + "', prenom = '" + unMedecin.getPrenom() + "', email = '" + unMedecin.getMail() + "', tel = '" + unMedecin.getTel() + "' specialite = '" + unMedecin.getSpecialite() + "', faculte = '" + unMedecin.getFaculte() + "' where idmedecin = " + unMedecin.getIdmedecin();
+        String requete = "update medecin set nom = '" + unMedecin.getNom() + "', prenom = '" + unMedecin.getPrenom() + "', email = '" + unMedecin.getMail() + "', tel = '" + unMedecin.getTel() + "', idprofession = '" + unMedecin.getIdprofession() + "', faculte = '" + unMedecin.getFaculte() + "' where idmedecin = " + unMedecin.getIdmedecin();
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -200,8 +200,8 @@ public class Modele {
         }
     }
 
-    public static void insertMedecin(String nom, String prenom, String tel, String email, String specialite, String faculte) {
-        String requete = "insert into medecin values (null, '" + nom + "', '" + prenom + "', '" + email + "', '" + tel + "', '" + specialite + "', '" + faculte + "')";
+    public static void insertMedecin(String nom, String prenom, String tel, String email, int idprofession, String faculte) {
+        String requete = "insert into medecin values (null, '" + nom + "', '" + prenom + "', '" + tel + "', '" + email + "', '" + idprofession + "', '" + faculte + "')";
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -220,7 +220,7 @@ public class Modele {
             requete = "select * from medecin ;";
         }
         else{
-            requete = "select * from medecin where nom like '%" + filtre + "%' or prenom like '%" + filtre + "%' or tel like '%" + filtre + "%' or email like '%" + filtre + "%' or specialite like '%" + filtre + "%' or faculte like '%" + filtre + "%'";
+            requete = "select * from medecin where nom like '%" + filtre + "%' or prenom like '%" + filtre + "%' or tel like '%" + filtre + "%' or email like '%" + filtre + "%' or idprofession like '%" + filtre + "%' or faculte like '%" + filtre + "%'";
         }
 
         try {
@@ -234,7 +234,7 @@ public class Modele {
                     unRes.getString("prenom"),
                     unRes.getString("tel"),
                     unRes.getString("email"),
-                    unRes.getString("specialite"),
+                    unRes.getInt("idprofession"),
                     unRes.getString("faculte")
                 );
                 lesMedecins.add(unMedecin);
@@ -248,9 +248,9 @@ public class Modele {
         return lesMedecins;
     }
 
-    public static Medecin selectWhereMedecin(String nom, String prenom, String email, String tel, String specialite, String faculte) {
+    public static Medecin selectWhereMedecin(String nom, String prenom, String email, String tel, int idprofession, String faculte) {
         Medecin unMedecin = null;
-        String requete = "select * from medecin where nom = '" + nom + "' and prenom = '" + prenom + "' and email = '" + email + "' and tel = '" + tel + "' and specialite = '" + specialite + "' and faculte = '" + faculte + "'";
+        String requete = "select * from medecin where nom = '" + nom + "' and prenom = '" + prenom + "' and email = '" + email + "' and tel = '" + tel + "' and idprofession = '" + idprofession + "' and faculte = '" + faculte + "'";
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -262,7 +262,7 @@ public class Modele {
                     unRes.getString("prenom"),
                     unRes.getString("tel"),
                     unRes.getString("email"),
-                    unRes.getString("specialite"),
+                    unRes.getInt("idprofession"),
                     unRes.getString("faculte")
                 );
             }
@@ -276,7 +276,7 @@ public class Modele {
     }
     
     public static void insertMedecin(Medecin unMedecin) {
-        String requete = "insert into medecin values (null, '" + unMedecin.getNom() + "', '" + unMedecin.getPrenom() + "', '" + unMedecin.getMail() + "', '" + unMedecin.getTel() + "', '" + unMedecin.getSpecialite() + "', '" + unMedecin.getFaculte() + "')";
+        String requete = "insert into medecin values (null, '" + unMedecin.getNom() + "', '" + unMedecin.getPrenom() + "', '" + unMedecin.getMail() + "', '" + unMedecin.getTel() + "', '" + unMedecin.getIdprofession() + "', '" + unMedecin.getFaculte() + "')";
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();

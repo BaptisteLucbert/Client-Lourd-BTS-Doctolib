@@ -1,28 +1,28 @@
 package controleur;
 
 public class Medecin {
-    int idmedecin;
-    String nom, prenom, tel, email, specialite, faculte;
+    int idmedecin, idprofession;
+    String nom, prenom, tel, email, faculte;
 
-    public Medecin(int idmedecin, String nom, String prenom, String tel, String email, String specialite, String faculte) {
+    public Medecin(int idmedecin, String nom, String prenom, String tel, String email, int idprofession, String faculte) {
         super();
         this.idmedecin = idmedecin;
         this.nom = nom;
         this.prenom = prenom;
         this.tel = tel;
         this.email = email;
-        this.specialite = specialite;
+        this.idprofession = idprofession;
         this.faculte = faculte;
     }
 
-    public Medecin(String nom, String prenom, String tel, String email, String specialite, String faculte) {
+    public Medecin(String nom, String prenom, String tel, String email, int idprofession, String faculte) {
         super();
         this.idmedecin = 0;
         this.nom = nom;
         this.prenom = prenom;
         this.tel = tel;
         this.email = email;
-        this.specialite = specialite;
+        this.idprofession = idprofession;
         this.faculte = faculte;
     }
 
@@ -66,12 +66,12 @@ public class Medecin {
         this.email = email;
     }
 
-    public String getSpecialite() {
-        return specialite;
+    public int getIdprofession() {
+        return idprofession;
     }
 
-    public void setSpecialite(String specialite) {
-        this.specialite = specialite;
+    public void setIdprofession(int idprofession) {
+        this.idprofession = idprofession;
     }
 
     public String getFaculte() {

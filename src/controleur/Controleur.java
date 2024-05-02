@@ -48,8 +48,8 @@ public class Controleur {
         Modele.insertMedecin(unMedecin);
     }
 
-    public static void insertMedecin(String nom, String prenom, String tel, String email, String specialite, String faculte) {
-        Modele.insertMedecin(nom, prenom, tel, email, specialite, faculte);
+    public static void insertMedecin(String nom, String prenom, String tel, String email, int idprofession, String faculte) {
+        Modele.insertMedecin(nom, prenom, tel, email, idprofession, faculte);
     }
 
     public static String[] selectAllMedecins() {
@@ -60,8 +60,8 @@ public class Controleur {
         return Modele.selectAllMedecins(filtre);
     }
 
-    public static Medecin selectWhereMedecin(String nom, String prenom, String email, String tel, String specialite, String faculte) {
-        return Modele.selectWhereMedecin(nom, prenom, email, tel, specialite, faculte);
+    public static Medecin selectWhereMedecin(String nom, String prenom, String email, String tel, int idprofession, String faculte) {
+        return Modele.selectWhereMedecin(nom, prenom, email, tel, idprofession, faculte);
     }
 
     /******************* Connections *******************/

@@ -106,7 +106,7 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
         JPanel panel = new JPanel();
         JLabel titleLabel = new JLabel("<html><u><b>Gestion des rendez-vous</b></u></html>");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setHorizontalAlignment(JLabel.CENTER); // Alignement central du texte
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
         panel.add(titleLabel);
         return panel;
     }
@@ -308,9 +308,9 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
     }
 
     private Object[][] obtenirDonnees(String filtre) {
-        ArrayList<RendezVous> lesRendezVous = Controleur.selectAllRDV(filtre); 
+        ArrayList<RendezVous> lesRendezVous = Controleur.selectAllRDV(filtre);
 		Object [][] matrice = new Object[lesRendezVous.size()][6];
-		int i = 0; 
+		int i = 0;
 		for (RendezVous unRendezVous : lesRendezVous) {
 			matrice[i][0] = unRendezVous.getIdrendezvous();
             matrice[i][1] = unRendezVous.getDaterdv();
