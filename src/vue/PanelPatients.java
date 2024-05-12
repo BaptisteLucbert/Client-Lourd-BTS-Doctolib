@@ -308,7 +308,7 @@ public class PanelPatients extends PanelPrincipal implements ActionListener, Key
 						Controleur.deletePatient(idpatient);
 						//suppression dans l'affichage de la table 
 						unTableau.supprimerLigne(numLigne);
-						lbPatient.setText("Nombre de patients disponibles :"+unTableau.getRowCount());
+						lbPatient.setText("Nombre de patients insérés : "+unTableau.getRowCount());
 					}
 				}
 				else {
@@ -375,7 +375,7 @@ public class PanelPatients extends PanelPrincipal implements ActionListener, Key
             matrice[i][8] = unPatient.getDateNaissance();
             matrice[i][9] = unPatient.getSexe();
             matrice[i][10] = unPatient.getIdMedecin();
-			i++;
+            i++;
 		}
 		return matrice;
     }
@@ -473,7 +473,7 @@ public class PanelPatients extends PanelPrincipal implements ActionListener, Key
 				//insertion dans l'affichage graphique 
 				Object ligne[]= {unPatient.getIdpatient(), nom, prenom, adresse, codePostal, ville, telephone, email, dateNaissance, sexe, idmedecin};
 				this.unTableau.ajouterLigne(ligne);
-				lbPatient.setText("Nombre de patient disponibles :"+unTableau.getRowCount());
+				lbPatient.setText("Nombre de patients insérés : "+unTableau.getRowCount());
 			
                 // Actualisation des combobox dans les autres panels
                 PanelRendezVous.actualiserCBPatient();
@@ -497,6 +497,7 @@ public class PanelPatients extends PanelPrincipal implements ActionListener, Key
             String email = this.txtEmail.getText();
             String dateNaissance = this.txtDateNaissance.getText();
             String sexe = PanelPatients.cbSexe.getSelectedItem().toString();
+            
             String chaine = PanelPatients.cbMedecin.getSelectedItem().toString();
             String tab [] = chaine.split(" "); 
             int idmedecin = Integer.parseInt(tab[0]);
@@ -506,7 +507,7 @@ public class PanelPatients extends PanelPrincipal implements ActionListener, Key
 			numLigne = tablePatient.getSelectedRow();
 			idPatient= Integer.parseInt(tablePatient.getValueAt(numLigne, 0).toString());
 
-            Patient unPatient = new Patient(idPatient, nom, prenom, adresse, ville, telephone, email, dateNaissance, codePostal, sexe, idmedecin); 
+            Patient unPatient = new Patient(idPatient, nom, prenom, adresse, ville, telephone, email, dateNaissance, codePostal, sexe, idmedecin);
 			//modification dans la base de données 
 			Controleur.updatePatient(unPatient);
 			//modification dans l'affichage 
@@ -532,7 +533,7 @@ public class PanelPatients extends PanelPrincipal implements ActionListener, Key
                 Controleur.deletePatient(idpatient);
                 //suppression dans l'affichage de la table
                 unTableau.supprimerLigne(numLigne);
-                lbPatient.setText("Nombre de patients disponibles :" + unTableau.getRowCount());
+                lbPatient.setText("Nombre de patients insérés : " + unTableau.getRowCount());
                 this.btSupprimer.setEnabled(false);
                 this.viderChamps();
 			    this.btEnregistrer.setText("Enregistrer");

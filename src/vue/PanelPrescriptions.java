@@ -31,8 +31,8 @@ import controleur.Tableau;
 
 public class PanelPrescriptions extends PanelPrincipal implements ActionListener, KeyListener {
 
-    private JTextField txtDatePrescription, txtMedicament;
-    private static JComboBox<String> cbPatient, cbMedecin, cbPriseMedicament;
+    private JTextField txtDatePrescription, txtMedicament, txtPriseMedicament;
+    private static JComboBox<String> cbPatient, cbMedecin;
     private JButton btEnregistrer, btAnnuler, btSupprimer;
 
     private JTable tablePrescription; 
@@ -161,8 +161,8 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        cbPriseMedicament = new JComboBox<>(new String[] {"1 jour", "2 jours", "3 jours", "4 jours", "5 jours"});
-        panel.add(cbPriseMedicament, gbc);
+        txtPriseMedicament = new JTextField(15);
+        panel.add(txtPriseMedicament, gbc);
 
         return panel;
     }
@@ -259,7 +259,7 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
 						Controleur.deletePrescription(idprescription);
 						//suppression dans l'affichage de la table 
 						unTableau.supprimerLigne(numLigne);
-						lbPrescription.setText("Nombre de prescriptions disponibles : "+unTableau.getRowCount());
+						lbPrescription.setText("Nombre de prescriptions insérés : "+unTableau.getRowCount());
 					}
 				}
 				else {
@@ -276,7 +276,7 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
                     txtMedicament.setText(medicament);
                     cbPatient.setSelectedItem(patient);
                     cbMedecin.setSelectedItem(medecin);
-                    cbPriseMedicament.setSelectedItem(priseMedicament);
+                    txtPriseMedicament.setText(priseMedicament);
 
 					// txtCategorie.setText(categorie);
 					btEnregistrer.setText("Modifier");
@@ -368,14 +368,12 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
             String chaine = this.cbPatient.getSelectedItem().toString();
             String tab [] = chaine.split(" ");
             int idpatient = Integer.parseInt(tab[0]);
-            
+        
             chaine = this.cbMedecin.getSelectedItem().toString();
             tab = chaine.split(" ");
             int idmedecin = Integer.parseInt(tab[0]);
 
-            chaine = this.cbPriseMedicament.getSelectedItem().toString();
-            String tabPriseMedicament[] = chaine.split(" ");
-            String priseMedicament = tabPriseMedicament[0];
+            String txtPriseMedicament = this.txtPriseMedicament.getText();
 
 
             if (datePrescription.equals("") || medicament.equals("")) {
@@ -390,18 +388,18 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
 			//on vérifie les données avant insertion dans la base 
 			if (ok) {
 				//on enregistre le new patient dans la base 
-				Prescription unePrescription = new Prescription(datePrescription, medicament, idpatient, idmedecin, priseMedicament);
+				Prescription unePrescription = new Prescription(datePrescription, medicament, idpatient, idmedecin, txtPriseMedicament);
 				Controleur.ajouterPrescription(unePrescription); 
 			
 				//récupération de l'ID donné par mysql 
-				unePrescription = Controleur.selectWherePrescription(datePrescription, medicament, idpatient, idmedecin, priseMedicament);
+				unePrescription = Controleur.selectWherePrescription(datePrescription, medicament, idpatient, idmedecin, txtPriseMedicament);
 			
 				JOptionPane.showMessageDialog(this, "Patient inséré avec succés dans la BDD");
 
 				//insertion dans l'affichage graphique 
-				Object ligne[]= {unePrescription.getIdprescription(), datePrescription, medicament, idpatient, idmedecin, priseMedicament};
+				Object ligne[]= {unePrescription.getIdprescription(), datePrescription, medicament, idpatient, idmedecin, txtPriseMedicament};
 				this.unTableau.ajouterLigne(ligne);
-				lbPrescription.setText("Nombre de patient disponibles :"+unTableau.getRowCount());
+				lbPrescription.setText("Nombre de prescriptions insérés : "+unTableau.getRowCount());
 			
 				this.viderChamps();
 			}
@@ -420,14 +418,11 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
             String tabPatient [] = chainePatient.split(" ");
             int idpatient = Integer.parseInt(tabPatient[0]);
 
-
             String chaineMedecin = this.cbMedecin.getSelectedItem().toString();
             String tabMedecin [] = chaineMedecin.split(" "); 
             int idmedecin = Integer.parseInt(tabMedecin[0]);
 
-            String chainePriseMedicament = this.cbPriseMedicament.getSelectedItem().toString();
-            String tabPriseMedicament [] = chainePriseMedicament.split(" ");
-            String priseMedicament = tabPriseMedicament[0];
+            String txtPriseMedicament = this.txtPriseMedicament.getText();
 
 			int numLigne = 0 ;
             int idPrescription = 0;
@@ -435,11 +430,11 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
 			idPrescription= Integer.parseInt(tablePrescription.getValueAt(numLigne, 0).toString());
 
 			//Instanciation d'un Patient 
-			Prescription unePrescription = new Prescription(idPrescription, datePrescription, medicament, idpatient, idmedecin, priseMedicament); 
+			Prescription unePrescription = new Prescription(idPrescription, datePrescription, medicament, idpatient, idmedecin, txtPriseMedicament);
 			//modification dans la base de données 
 			Controleur.updatePrescription(unePrescription);
 			//modification dans l'affichage 
-			Object ligne []= {idPrescription, datePrescription, medicament, idpatient, idmedecin};
+			Object ligne []= {idPrescription, datePrescription, medicament, idpatient, idmedecin, txtPriseMedicament};
 			this.unTableau.modifierLigne(numLigne, ligne);
 			JOptionPane.showMessageDialog(this, "Modification effectuée");
 			this.viderChamps();
@@ -455,7 +450,7 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
                 Controleur.deletePrescription(idPrescription);
                 // Suppression dans l'affichage de la table
                 unTableau.supprimerLigne(numLigne);
-                lbPrescription.setText("Nombre de prescriptions présentes dans la DB :" + unTableau.getRowCount());
+                lbPrescription.setText("Nombre de prescriptions insérés : " + unTableau.getRowCount());
                 this.btSupprimer.setEnabled(false);
                 this.viderChamps();
 			    this.btEnregistrer.setText("Enregistrer");
@@ -473,7 +468,7 @@ public class PanelPrescriptions extends PanelPrincipal implements ActionListener
         txtMedicament.setText("");
         cbPatient.setSelectedIndex(0);
         cbMedecin.setSelectedIndex(0);
-        cbPriseMedicament.setSelectedIndex(0);
+        txtPriseMedicament.setText("");
     }
 
     @Override

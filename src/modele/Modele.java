@@ -9,6 +9,7 @@ import controleur.Medecin;
 import controleur.Patient;
 import controleur.Personne;
 import controleur.Prescription;
+import controleur.Profession;
 import controleur.RendezVous;
 
 public class Modele {
@@ -108,6 +109,7 @@ public class Modele {
 
     public static String[] selectAllPatients() {
         String requete = "select * from patient";
+        System.out.println(requete);
         String tab[] = null;
         try {
             uneBdd.seConnecter();
@@ -138,9 +140,11 @@ public class Modele {
         String requete = ""; 
         if (filtre.equals("")){
             requete = "select * from patient ;";
+            System.out.println(requete);
         }
         else{
             requete = "select * from patient where nom like '%" + filtre + "%' or prenom like '%" + filtre + "%' or adresse like '%" + filtre + "%' or ville like '%" + filtre + "%' or telephone like '%" + filtre + "%' or email like '%" + filtre + "%' or dateNaissance like '%" + filtre + "%' or codePostal like '%" + filtre + "%' or sexe like '%" + filtre + "%'";
+            System.out.println(requete);
         }
 
         try {
@@ -176,6 +180,7 @@ public class Modele {
     /******************* Medecins *******************/
     public static void updateMedecin(Medecin unMedecin) {
         String requete = "update medecin set nom = '" + unMedecin.getNom() + "', prenom = '" + unMedecin.getPrenom() + "', email = '" + unMedecin.getMail() + "', tel = '" + unMedecin.getTel() + "', idprofession = '" + unMedecin.getIdprofession() + "', faculte = '" + unMedecin.getFaculte() + "' where idmedecin = " + unMedecin.getIdmedecin();
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -189,6 +194,7 @@ public class Modele {
 
     public static void deleteMedecin(int idmedecin) {
         String requete = "delete from medecin where idmedecin = " + idmedecin;
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -200,8 +206,9 @@ public class Modele {
         }
     }
 
-    public static void insertMedecin(String nom, String prenom, String tel, String email, int idprofession, String faculte) {
-        String requete = "insert into medecin values (null, '" + nom + "', '" + prenom + "', '" + tel + "', '" + email + "', '" + idprofession + "', '" + faculte + "')";
+    public static void insertMedecin(String nom, String prenom, String email, String tel, int idprofession, String faculte) {
+        String requete = "insert into medecin values (null, '" + nom + "', '" + prenom + "', '" + email + "', '" + tel + "', '" + idprofession + "', '" + faculte + "')";
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -218,9 +225,11 @@ public class Modele {
         String requete = ""; 
         if (filtre.equals("")){
             requete = "select * from medecin ;";
+            System.out.println(requete);
         }
         else{
-            requete = "select * from medecin where nom like '%" + filtre + "%' or prenom like '%" + filtre + "%' or tel like '%" + filtre + "%' or email like '%" + filtre + "%' or idprofession like '%" + filtre + "%' or faculte like '%" + filtre + "%'";
+            requete = "select * from medecin where nom like '%" + filtre + "%' or prenom like '%" + filtre + "%' or email like '%" + filtre + "%' or tel like '%" + filtre + "%' or idprofession like '%" + filtre + "%' or faculte like '%" + filtre + "%'";
+            System.out.println(requete);
         }
 
         try {
@@ -232,8 +241,8 @@ public class Modele {
                     unRes.getInt("idmedecin"),
                     unRes.getString("nom"),
                     unRes.getString("prenom"),
-                    unRes.getString("tel"),
                     unRes.getString("email"),
+                    unRes.getString("tel"),
                     unRes.getInt("idprofession"),
                     unRes.getString("faculte")
                 );
@@ -251,6 +260,7 @@ public class Modele {
     public static Medecin selectWhereMedecin(String nom, String prenom, String email, String tel, int idprofession, String faculte) {
         Medecin unMedecin = null;
         String requete = "select * from medecin where nom = '" + nom + "' and prenom = '" + prenom + "' and email = '" + email + "' and tel = '" + tel + "' and idprofession = '" + idprofession + "' and faculte = '" + faculte + "'";
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -260,8 +270,8 @@ public class Modele {
                     unRes.getInt("idmedecin"),
                     unRes.getString("nom"),
                     unRes.getString("prenom"),
-                    unRes.getString("tel"),
                     unRes.getString("email"),
+                    unRes.getString("tel"),
                     unRes.getInt("idprofession"),
                     unRes.getString("faculte")
                 );
@@ -277,6 +287,7 @@ public class Modele {
     
     public static void insertMedecin(Medecin unMedecin) {
         String requete = "insert into medecin values (null, '" + unMedecin.getNom() + "', '" + unMedecin.getPrenom() + "', '" + unMedecin.getMail() + "', '" + unMedecin.getTel() + "', '" + unMedecin.getIdprofession() + "', '" + unMedecin.getFaculte() + "')";
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -290,6 +301,7 @@ public class Modele {
 
     public static String[] selectAllMedecins() {
         String requete = "select * from medecin";
+        System.out.println(requete);
         String tab[] = null;
         try {
             uneBdd.seConnecter();
@@ -319,6 +331,7 @@ public class Modele {
     public static Personne verifConnexion(String login, String mdp) {
         Personne unePersonne = null;
         String requete = "select * from personne where email = '" + login + "' and mdp = '" + mdp + "'";
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -346,6 +359,7 @@ public class Modele {
     /******************* Personne *******************/
     public static void ajouterPersonne(String nom, String prenom, String email, String tel, String role, String mdp) {
         String requete = "insert into personne values (null, '" + nom + "', '" + prenom + "', '" + email + "', '" + mdp + "', '" + tel + "', '" + role + "')";
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -443,6 +457,7 @@ public class Modele {
 
     public static void deletePersonne(int idpersonne) {
         String requete = "delete from personne where idpersonne = " + idpersonne;
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -470,6 +485,7 @@ public class Modele {
 
     public static String[] selectAllPersonne() {
         String requete = "select * from personne";
+        System.out.println(requete);
         String tab[] = null;
         try {
             uneBdd.seConnecter();
@@ -500,9 +516,11 @@ public class Modele {
         String requete = ""; 
         if (filtre.equals("")){
             requete = "select * from personne ;";
+            System.out.println(requete);
         }
         else{
             requete = "select * from personne where nom like '%" + filtre + "%' or prenom like '%" + filtre + "%' or email like '%" + filtre + "%' or mdp like '%" + filtre + "%' or tel like '%" + filtre + "%'";
+            System.out.println(requete);
         }
 
         try {
@@ -534,6 +552,7 @@ public class Modele {
 
     public static void ajouterRdv(String date, String heure, String etatRdv, int patientRdv, int medecinRdv) {
         String requete = "insert into rendezvous values (null, '" + date + "', '" + heure + "', '" + etatRdv + "', '" + patientRdv + "', '" + medecinRdv + "')";
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -602,6 +621,7 @@ public class Modele {
 
     public static String[] selectAllRdv() {
         String requete = "select * from rendezvous";
+        System.out.println(requete);
         String tab[] = null;
         try {
             uneBdd.seConnecter();
@@ -632,9 +652,11 @@ public class Modele {
         String requete = ""; 
         if (filtre.equals("")){
             requete = "select * from rendezvous ;";
+            System.out.println(requete);
         }
         else{
             requete = "select * from rendezvous where daterdv like '%" + filtre + "%' or heure like '%" + filtre + "%' or etat like '%" + filtre + "%' or idpatient like '%" + filtre + "%' or idmedecin like '%" + filtre + "%'";
+            System.out.println(requete);
         }
 
         try {
@@ -663,6 +685,7 @@ public class Modele {
 
     public static void deleteRdv(int idrendezvous) {
         String requete = "delete from rendezvous where idrendezvous = " + idrendezvous;
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -677,6 +700,7 @@ public class Modele {
     /******************* Prescription *******************/
     public static String[] selectAllPrescription() {
         String requete = "select * from prescription";
+        System.out.println(requete);
         String tab[] = null;
         try {
             uneBdd.seConnecter();
@@ -704,6 +728,7 @@ public class Modele {
 
     public static void deletePrescription(int idprescription) {
         String requete = "delete from prescription where idprescription = " + idprescription;
+        System.out.println(requete);
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
@@ -720,9 +745,11 @@ public class Modele {
         String requete = ""; 
         if (filtre.equals("")){
             requete = "select * from prescription ;";
+            System.out.println(requete);
         }
         else{
             requete = "select * from prescription where idprescription like '%" + filtre + "%' or dateprescription like '%" + filtre + "%' or medicament like '%" + filtre + "%' or idpatient like '%" + filtre + "%' or idmedecin like '%" + filtre + "%' or priseMedicament like '%" + filtre + "%'";
+            System.out.println(requete);
         }
 
         try {
@@ -805,16 +832,25 @@ public class Modele {
         }
     }
 
-    /******************* Specialités *******************/
-    public static ArrayList<String> selectAllSpecialites() {
-        String requete = "select * from specialite";
-        ArrayList<String> lesSpecialites = new ArrayList<String>();
+    /******************* Profession *******************/
+    public static String[] selectAllProfessions() {
+        String requete = "select * from professions";
+        System.out.println(requete);
+        String tab[] = null;
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
             ResultSet unRes = unStat.executeQuery(requete);
+            int nbLignes = 0;
+            if (unRes.last()) {
+                nbLignes = unRes.getRow();
+                unRes.beforeFirst();
+            }
+            tab = new String[nbLignes];
+            int i = 0;
             while (unRes.next()) {
-                lesSpecialites.add(unRes.getString("libelle"));
+                tab[i] = unRes.getInt("idprofession") + " " + unRes.getString("libelle");
+                i++;
             }
             unRes.close();
             unStat.close();
@@ -822,19 +858,28 @@ public class Modele {
         } catch (SQLException exp) {
             System.out.println("Erreur d'execution de la requete : " + requete);
         }
-        return lesSpecialites;
+        return tab;
     }
 
-    /******************* Profession *******************/
-    public static ArrayList<String> selectAllProfessions() {
-        String requete = "select * from professions";
-        ArrayList<String> lesProfessions = new ArrayList<String>();
+
+
+
+
+
+
+
+
+
+    public static Object selectProfession(int idprofession) {
+        String requete = "select * from professions where idprofession = " + idprofession;
+        System.out.println(requete);
+        String libelle = "";
         try {
             uneBdd.seConnecter();
             Statement unStat = uneBdd.getMaConnexion().createStatement();
             ResultSet unRes = unStat.executeQuery(requete);
-            while (unRes.next()) {
-                lesProfessions.add(unRes.getString("libelle"));
+            if (unRes.next()) {
+                libelle = unRes.getString("libelle");
             }
             unRes.close();
             unStat.close();
@@ -842,6 +887,89 @@ public class Modele {
         } catch (SQLException exp) {
             System.out.println("Erreur d'execution de la requete : " + requete);
         }
-        return lesProfessions;
+        return libelle;
     }
+
+    public static Medecin selectWhereMedecin(int idMedecin) {
+        Medecin unMedecin = null;
+        String requete = "select * from medecin where idmedecin = " + idMedecin;
+        System.out.println(requete);
+        try {
+            uneBdd.seConnecter();
+            Statement unStat = uneBdd.getMaConnexion().createStatement();
+            ResultSet unRes = unStat.executeQuery(requete);
+            if (unRes.next()) {
+                unMedecin = new Medecin(
+                    unRes.getInt("idmedecin"),
+                    unRes.getString("nom"),
+                    unRes.getString("prenom"),
+                    unRes.getString("email"),
+                    unRes.getString("tel"),
+                    unRes.getInt("idprofession"),
+                    unRes.getString("faculte")
+                );
+            }
+            unRes.close();
+            unStat.close();
+            uneBdd.seDeConnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur d'execution de la requete : " + requete);
+        }
+        return unMedecin;
+    }
+
+    public static Patient selectWherePatient(int idpatient) {
+        Patient unPatient = null;
+        String requete = "select * from patient where idpatient = " + idpatient;
+        System.out.println(requete);
+        try {
+            uneBdd.seConnecter();
+            Statement unStat = uneBdd.getMaConnexion().createStatement();
+            ResultSet unRes = unStat.executeQuery(requete);
+            if (unRes.next()) {
+                unPatient = new Patient(
+                    unRes.getInt("idpatient"),
+                    unRes.getString("nom"),
+                    unRes.getString("prenom"),
+                    unRes.getString("adresse"),
+                    unRes.getString("ville"),
+                    unRes.getString("telephone"),
+                    unRes.getString("email"),
+                    unRes.getString("dateNaissance"),
+                    unRes.getString("codePostal"),
+                    unRes.getString("sexe"),
+                    unRes.getInt("idmedecin")
+                );
+            }
+            unRes.close();
+            unStat.close();
+            uneBdd.seDeConnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur d'execution de la requete : " + requete);
+        }
+        return unPatient;
+    }
+
+    public static Profession selectWhereProfession(int idprofession) {
+        Profession uneProfession = null;
+        String requete = "select * from professions where idprofession = " + idprofession;
+        System.out.println(requete);
+        try {
+            uneBdd.seConnecter();
+            Statement unStat = uneBdd.getMaConnexion().createStatement();
+            ResultSet unRes = unStat.executeQuery(requete);
+            if (unRes.next()) {
+                uneProfession = new Profession(
+                    unRes.getInt("idprofession"),
+                    unRes.getString("libelle")
+                );
+            }
+            unRes.close();
+            unStat.close();
+            uneBdd.seDeConnecter();
+        } catch (SQLException exp) {
+            System.out.println("Erreur d'execution de la requete : " + requete);
+        }
+        return uneProfession;
+    }    
 }

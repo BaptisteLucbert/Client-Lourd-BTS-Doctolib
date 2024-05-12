@@ -109,7 +109,7 @@ public class PanelAdministrateurs extends PanelPrincipal implements ActionListen
 
     private JPanel createTitrePanel() {
         JPanel panel = new JPanel();
-        JLabel titleLabel = new JLabel("<html><u><b>Gestion des rendez-vous</b></u></html>");
+        JLabel titleLabel = new JLabel("<html><u><b>Gestion des utilisateurs</b></u></html>");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titleLabel.setHorizontalAlignment(JLabel.CENTER); // Alignement central du texte
         panel.add(titleLabel);
@@ -260,7 +260,7 @@ public class PanelAdministrateurs extends PanelPrincipal implements ActionListen
 						Controleur.deletePersonne(idpersonne);
 						//suppression dans l'affichage de la table 
 						unTableau.supprimerLigne(numLigne);
-						lbPersonne.setText("Nombre de personnes dans la DB :"+unTableau.getRowCount());
+						lbPersonne.setText("Nombre de personnes insérés : "+unTableau.getRowCount());
 					}
 				}
 				else {
@@ -380,13 +380,6 @@ public class PanelAdministrateurs extends PanelPrincipal implements ActionListen
                 ok = false;
             }
             
-            /*Si le numéro de téléphone est incorect, on change la couleur de fond en rouge
-            if (!ok) {
-                txtTel.setBackground(Color.RED);
-            } else {
-                txtTel.setBackground(Color.WHITE);
-            }*/
-            
             //on vérifie les données avant insertion dans la base 
             if (ok) {
                 //on enregistre le new personne dans la base 
@@ -401,7 +394,7 @@ public class PanelAdministrateurs extends PanelPrincipal implements ActionListen
 				//insertion dans l'affichage graphique 
 				Object ligne[]= {unePersonne.getIdpersonne(), nom, prenom, email, tel, role, mdp};
 				this.unTableau.ajouterLigne(ligne);
-				lbPersonne.setText("Nombre de personne disponibles :"+unTableau.getRowCount());
+				lbPersonne.setText("Nombre de personnes insérés : "+unTableau.getRowCount());
 			
 				this.viderChamps();
 			}
@@ -432,7 +425,7 @@ public class PanelAdministrateurs extends PanelPrincipal implements ActionListen
             //insertion dans l'affichage graphique
             Object ligne[]= {idpersonne, nom, prenom, email, tel, role, mdp};
             this.unTableau.modifierLigne(numLigne, ligne);
-            lbPersonne.setText("Nombre de personne disponibles :"+unTableau.getRowCount());
+            lbPersonne.setText("Nombre de personnes insérés : "+unTableau.getRowCount());
             this.viderChamps();
             this.btEnregistrer.setText("Enregistrer");
             this.btSupprimer.setEnabled(false);
@@ -448,7 +441,7 @@ public class PanelAdministrateurs extends PanelPrincipal implements ActionListen
                 Controleur.deletePersonne(idpersonne);
                 //suppression dans l'affichage de la table 
                 unTableau.supprimerLigne(numLigne);
-                lbPersonne.setText("Nombre de personnes dans la DB :"+unTableau.getRowCount());
+                lbPersonne.setText("Nombre de personnes insérés : "+unTableau.getRowCount());
                 this.btSupprimer.setEnabled(false);
                 this.viderChamps();
 			    this.btEnregistrer.setText("Enregistrer");

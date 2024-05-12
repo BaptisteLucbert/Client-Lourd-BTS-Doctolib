@@ -165,7 +165,7 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
         gbc.gridy = 4;
         panel.add(lblSpecialite, gbc);
 
-        cbSpecialite = new JComboBox<>(Controleur.selectAllProfessions().toArray(new String[0]));
+        cbSpecialite = new JComboBox<>(Controleur.selectAllProfessions());
         gbc.gridx = 1;
         gbc.gridy = 4;
         panel.add(cbSpecialite, gbc);
@@ -211,7 +211,7 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
         panel.add(panelRech, gbc);
         btFiltre.addActionListener(this);
 
-        lbMedecin = new JLabel("Nombre de medecins disponibles : "+unTableau.getRowCount());
+        lbMedecin = new JLabel("Nombre de médecins insérés : "+unTableau.getRowCount());
         gbc.gridx = 0;
         gbc.gridy = 16;
         gbc.gridwidth = 1;
@@ -261,7 +261,7 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
 						Controleur.deleteMedecin(idmedecin);
 						//suppression dans l'affichage de la table 
 						unTableau.supprimerLigne(numLigne);
-						lbMedecin.setText("Nombre de medecins disponibles :"+unTableau.getRowCount());
+						lbMedecin.setText("Nombre de médecins insérés : "+unTableau.getRowCount());
 					}
 				}
 				else {
@@ -269,16 +269,16 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
                     idmedecin = Integer.parseInt(tableMedecin.getValueAt(numLigne, 0).toString());
                     String nom = tableMedecin.getValueAt(numLigne, 1).toString();
                     String prenom = tableMedecin.getValueAt(numLigne, 2).toString();
-                    String tel = tableMedecin.getValueAt(numLigne, 3).toString();
-                    String email = tableMedecin.getValueAt(numLigne, 4).toString();
+                    String email = tableMedecin.getValueAt(numLigne, 3).toString();
+                    String tel = tableMedecin.getValueAt(numLigne, 4).toString();
                     String specialite = tableMedecin.getValueAt(numLigne, 5).toString();
                     String faculte = tableMedecin.getValueAt(numLigne, 6).toString();
 
 					//remplissage du formulaire 
 					txtNom.setText(nom);
                     txtPrenom.setText(prenom);
-                    txtTel.setText(tel);
                     txtMail.setText(email);
+                    txtTel.setText(tel);
                     cbSpecialite.setSelectedItem(specialite);
                     txtFaculte.setText(faculte);
 
@@ -364,9 +364,14 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
 			boolean ok = true;
 			String nom = this.txtNom.getText();
             String prenom = this.txtPrenom.getText();
-            String tel = this.txtTel.getText();
             String email = this.txtMail.getText();
-            int idprofession = this.cbSpecialite.getSelectedIndex();
+            String tel = this.txtTel.getText();
+
+            int idprofession = 0;
+            String chaine = PanelMedecins.this.cbSpecialite.getSelectedItem().toString();
+            String tab [] = chaine.split(" ");
+            idprofession = Integer.parseInt(tab[0]);
+
             String faculte = this.txtFaculte.getText();
 
             if (nom.equals("") || prenom.equals("") || tel.equals("") || email.equals("")) {
@@ -386,17 +391,17 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
 			//on vérifie les données avant insertion dans la base 
 			if (ok) {
 				//on enregistre le new medecin dans la base 
-				Medecin unMedecin = new Medecin(nom, prenom, tel, email, idprofession, faculte);
+				Medecin unMedecin = new Medecin(nom, prenom, email, tel, idprofession, faculte);
 				Controleur.insertMedecin(unMedecin); 
 			
 				//récupération de l'ID donné par mysql 
-				unMedecin = Controleur.selectWhereMedecin(nom, prenom, email, tel, idprofession, faculte); 
+				unMedecin = Controleur.selectWhereMedecin(nom, prenom, email, tel, idprofession, faculte);
 			
 				JOptionPane.showMessageDialog(this, "Medecin inséré avec succés dans la BDD");
 				//insertion dans l'affichage graphique 
-				Object ligne[]= {unMedecin.getIdmedecin(), nom, prenom, tel, email, idprofession, faculte};
+				Object ligne[]= {unMedecin.getIdmedecin(), nom, prenom, email, tel, idprofession, faculte};
 				this.unTableau.ajouterLigne(ligne);
-				lbMedecin.setText("Nombre de médecins disponibles :"+unTableau.getRowCount());
+				lbMedecin.setText("Nombre de médecins insérés : "+unTableau.getRowCount());
                 
                 //actualisation des combobox dans les autres panels
                 PanelPatients.actualiserCBMedecin();
@@ -420,9 +425,14 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
 		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Modifier")) {
             String nom = this.txtNom.getText();
             String prenom = this.txtPrenom.getText();
-            String tel = this.txtTel.getText();
             String email = this.txtMail.getText();
-            int getIdprofession = cbSpecialite.getSelectedIndex();
+            String tel = this.txtTel.getText();
+            
+            int idprofession = 0;
+            String chaine = PanelMedecins.this.cbSpecialite.getSelectedItem().toString();
+            String tab [] = chaine.split(" ");
+            idprofession = Integer.parseInt(tab[0]);
+
             String faculte = this.txtFaculte.getText();
 			
 			int numLigne = 0 ; 
@@ -430,11 +440,11 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
 			numLigne = tableMedecin.getSelectedRow();
 			idmedecin= Integer.parseInt(tableMedecin.getValueAt(numLigne, 0).toString());
 
-            Medecin unMedecin = new Medecin(idmedecin, nom, prenom, tel, email, getIdprofession, faculte); 
+            Medecin unMedecin = new Medecin(idmedecin, nom, prenom, email, tel, idprofession, faculte);
 			//modification dans la base de données 
 			Controleur.updateMedecin(unMedecin);
 			//modification dans l'affichage 
-			Object ligne []= {idmedecin, nom, prenom, tel, email, getIdprofession, faculte};
+			Object ligne []= {idmedecin, nom, prenom, email, tel, idprofession, faculte};
 			this.unTableau.modifierLigne(numLigne, ligne);
 			JOptionPane.showMessageDialog(this, "Modification effectuée");
 			this.viderChamps();
@@ -454,7 +464,7 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
                 Controleur.deleteMedecin(idmedecin);
                 // Suppression dans l'affichage de la table
                 unTableau.supprimerLigne(numLigne);
-                lbMedecin.setText("Nombre de medecins disponibles :"+unTableau.getRowCount());
+                lbMedecin.setText("Nombre de médecins insérés : "+unTableau.getRowCount());
                 this.btSupprimer.setEnabled(false);
                 this.viderChamps();
 			    this.btEnregistrer.setText("Enregistrer");
@@ -475,8 +485,8 @@ public class PanelMedecins extends PanelPrincipal implements ActionListener, Key
     private void viderChamps() {
         txtNom.setText("");
         txtPrenom.setText("");
-        txtTel.setText("");
         txtMail.setText("");
+        txtTel.setText("");
         txtFaculte.setText("");
         cbSpecialite.setSelectedIndex(0);
     }

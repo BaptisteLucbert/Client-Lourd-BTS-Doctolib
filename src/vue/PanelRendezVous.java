@@ -144,9 +144,9 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
         panel.add(lblEtat, gbc);
 
         etat = new JComboBox<String>();
+        etat.addItem("Annulé");
         etat.addItem("En attente");
         etat.addItem("Confirmé");
-        etat.addItem("Annulé");
         gbc.gridx = 1;
         gbc.gridy = 2;
         panel.add(etat, gbc);
@@ -215,7 +215,7 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
         panel.add(panelRech, gbc);
         btFiltre.addActionListener(this);
 
-        lbRdv = new JLabel("Nombre de medecins disponibles : "+unTableau.getRowCount());
+        lbRdv = new JLabel("Nombre de rendez-vous insérés : "+unTableau.getRowCount());
         gbc.gridx = 0;
         gbc.gridy = 16;
         gbc.gridwidth = 1;
@@ -265,7 +265,7 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
 						Controleur.deleteRdv(idrendezvous);
 						//suppression dans l'affichage de la table 
 						unTableau.supprimerLigne(numLigne);
-						lbRdv.setText("Nombre de rendez-vous pris :"+unTableau.getRowCount());
+						lbRdv.setText("Nombre de rendez-vous insérés : "+unTableau.getRowCount());
 					}
 				}
 				else {
@@ -276,7 +276,6 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
                     String etatRdv = tableRdv.getValueAt(numLigne, 3).toString();
                     String patientRdv = tableRdv.getValueAt(numLigne, 4).toString();
                     String medecinRdv = tableRdv.getValueAt(numLigne, 5).toString();
-
 
 					//remplissage du formulaire
                     txtDaterdv.setText(date);
@@ -318,7 +317,7 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
             matrice[i][3] = unRendezVous.getEtat();
             matrice[i][4] = unRendezVous.getIdpatient();
             matrice[i][5] = unRendezVous.getIdmedecin();
-			i++;
+            i++;
 		}
 		return matrice;
     }
@@ -354,19 +353,19 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==this.btAnnuler) {
-			this.viderChamps();
+        if (e.getSource() == this.btAnnuler) {
+            this.viderChamps();
             this.btSupprimer.setEnabled(false);
             this.btEnregistrer.setText("Enregistrer");
-
+    
             // Déselectionner la ligne sélectionnée
             tableRdv.clearSelection();
-		}
-		else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Enregistrer")) {
+        } else if (e.getSource() == this.btEnregistrer && this.btEnregistrer.getText().equals("Enregistrer")) {
             boolean ok = true;
             String date = this.txtDaterdv.getText();
             String heure = this.txtHeure.getText();
             String etatRdv = this.etat.getSelectedItem().toString();
+
             String chaine = this.cbPatient.getSelectedItem().toString(); 
             String tab [] = chaine.split(" ");
             int patientRdv = Integer.parseInt(tab[0]);
@@ -374,7 +373,7 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
             chaine = this.cbMedecin.getSelectedItem().toString(); 
             tab  = chaine.split(" ");
             int medecinRdv = Integer.parseInt(tab[0]);
-
+            
             if (date.equals("") || heure.equals("")) {
                 ok = false;
                 JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -382,26 +381,26 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
                 ok = false;
                 JOptionPane.showMessageDialog(this, "Ce rendez-vous existe déjà", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-        
-            //on vérifie les données avant insertion dans la base 
+    
+            // Vérifier les données avant insertion dans la base 
             if (ok) {
-                //on enregistre le new personne dans la base 
+                // Enregistrer le nouveau rendez-vous dans la base 
                 RendezVous unRendezVous = new RendezVous(date, heure, etatRdv, patientRdv, medecinRdv);
                 Controleur.ajouterRdv(unRendezVous);
-			
-				//récupération de l'ID donné par mysql 
-				unRendezVous = Controleur.selectWhereRdv(date, heure, etatRdv, patientRdv, medecinRdv);
-			
-				JOptionPane.showMessageDialog(this, "Rendez-vous inséré avec succés dans la BDD");
-
-				//insertion dans l'affichage graphique 
-				Object ligne[]= {unRendezVous.getIdrendezvous(), date, heure, etatRdv, patientRdv, medecinRdv};
-				this.unTableau.ajouterLigne(ligne);
-				lbRdv.setText("Nombre de rendez-vous disponibles :"+unTableau.getRowCount());
-			
-				this.viderChamps();
-			}
-		}
+    
+                // Récupération de l'ID donné par MySQL 
+                unRendezVous = Controleur.selectWhereRdv(date, heure, etatRdv, patientRdv, medecinRdv);
+    
+                JOptionPane.showMessageDialog(this, "Rendez-vous inséré avec succès dans la BDD");
+    
+                // Insertion dans l'affichage graphique 
+                Object ligne[] = {unRendezVous.getIdrendezvous(), date, heure, etatRdv, patientRdv, medecinRdv};
+                this.unTableau.ajouterLigne(ligne);
+                lbRdv.setText("Nombre de rendez-vous insérés : " + unTableau.getRowCount());
+    
+                this.viderChamps();
+            }
+        }
 		else if (e.getSource()== this.btFiltre)
 		{
 			String filtre = this.txtFiltre.getText(); 
@@ -414,6 +413,7 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
             String date = this.txtDaterdv.getText();
             String heure = this.txtHeure.getText();
             String etatRdv = this.etat.getSelectedItem().toString();
+            
             String chaine = this.cbPatient.getSelectedItem().toString(); 
             String tab [] = chaine.split(" ");
             int patientRdv = Integer.parseInt(tab[0]);
@@ -446,7 +446,7 @@ public class PanelRendezVous extends PanelPrincipal implements ActionListener, K
                 Controleur.deleteRdv(idrendezvous);
                 // Suppression dans l'affichage de la table
                 unTableau.supprimerLigne(numLigne);
-                lbRdv.setText("Nombre de rendez-vous pris :" + unTableau.getRowCount());
+                lbRdv.setText("Nombre de rendez-vous insérés : " + unTableau.getRowCount());
                 this.btSupprimer.setEnabled(false);
                 this.viderChamps();
 			    this.btEnregistrer.setText("Enregistrer");

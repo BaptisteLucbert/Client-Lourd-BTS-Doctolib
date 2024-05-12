@@ -64,7 +64,7 @@ public class VueConnexion extends JFrame implements ActionListener, KeyListener 
         txtMdp = new JPasswordField();
         txtMdp.setBounds(150, 160, 200, 30);
         panelConnexion.add(txtMdp);
-        txtMdp.setText("Superb@pt95!");
+        txtMdp.setText("123456789");
     
         btnConnexion = new JButton("Connexion");
         btnConnexion.setBounds(50, 200, 100, 30);

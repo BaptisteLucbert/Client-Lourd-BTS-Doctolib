@@ -2,26 +2,26 @@ package controleur;
 
 public class Medecin {
     int idmedecin, idprofession;
-    String nom, prenom, tel, email, faculte;
+    String nom, prenom, email, tel, faculte;
 
-    public Medecin(int idmedecin, String nom, String prenom, String tel, String email, int idprofession, String faculte) {
+    public Medecin(int idmedecin, String nom, String prenom, String email, String tel, int idprofession, String faculte) {
         super();
         this.idmedecin = idmedecin;
         this.nom = nom;
         this.prenom = prenom;
-        this.tel = tel;
         this.email = email;
+        this.tel = tel;
         this.idprofession = idprofession;
         this.faculte = faculte;
     }
 
-    public Medecin(String nom, String prenom, String tel, String email, int idprofession, String faculte) {
+    public Medecin(String nom, String prenom, String email, String tel, int idprofession, String faculte) {
         super();
         this.idmedecin = 0;
         this.nom = nom;
         this.prenom = prenom;
-        this.tel = tel;
         this.email = email;
+        this.tel = tel;
         this.idprofession = idprofession;
         this.faculte = faculte;
     }

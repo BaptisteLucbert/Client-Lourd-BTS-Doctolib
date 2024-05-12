@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
@@ -120,25 +121,25 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
         panel.add(labelTitre, gbc);
 
         // Nom
-         labelNom = new JLabel("Nom : " + unePersonne.getNom());
+        labelNom = new JLabel("Nom : " + unePersonne.getNom());
         gbc.gridx = 0;
         gbc.gridy = 1;
         panel.add(labelNom, gbc);
 
         // Prenom
-         labelPrenom = new JLabel("Prenom : " + unePersonne.getPrenom());
+        labelPrenom = new JLabel("Prenom : " + unePersonne.getPrenom());
         gbc.gridx = 0;
         gbc.gridy = 2;
         panel.add(labelPrenom, gbc);
 
         // Email
-         labelEmail = new JLabel("Email : " + unePersonne.getEmail());
+        labelEmail = new JLabel("Email : " + unePersonne.getEmail());
         gbc.gridx = 0;
         gbc.gridy = 3;
         panel.add(labelEmail, gbc);
 
         // Telephone
-         labelTel = new JLabel("Telephone : " + unePersonne.getTel());
+        labelTel = new JLabel("Telephone : " + unePersonne.getTel());
         gbc.gridx = 0;
         gbc.gridy = 4;
         panel.add(labelTel, gbc);
@@ -172,11 +173,11 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
     public void updateAffichage (){
         
         // Nom
-         labelNom.setText("Nom : " + unePersonne.getNom());
+        labelNom.setText("Nom : " + unePersonne.getNom());
        
 
         // Prenom
-         labelPrenom.setText("Prenom : " + unePersonne.getPrenom());
+        labelPrenom.setText("Prenom : " + unePersonne.getPrenom());
        
         // Email
         labelEmail.setText("Email : " + unePersonne.getEmail());
@@ -290,13 +291,11 @@ public class PanelProfil extends PanelPrincipal implements ActionListener {
                 // Appeler la méthode hypothétique d'updatePersonneProfil dans le Controleur
                 try {
                     Controleur.updatePersonneProfil(personneMiseAJour);
-                    JOptionPane.showMessageDialog(this, "Profil enregistré avec succès", "Information",
-                            JOptionPane.INFORMATION_MESSAGE);
-                           this.updateAffichage ();
+                    JOptionPane.showMessageDialog(this, "Profil enregistré avec succès", "Information", JOptionPane.INFORMATION_MESSAGE);
+                    this.unePersonne = personneMiseAJour;
+                    this.updateAffichage();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this,
-                            "Erreur lors de la mise à jour du profil dans la base de données", "Erreur",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this,"Erreur lors de la mise à jour du profil dans la base de données", "Erreur", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
             }

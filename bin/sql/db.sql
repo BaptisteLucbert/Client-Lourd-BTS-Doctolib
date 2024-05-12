@@ -17,6 +17,7 @@ CREATE TABLE patient (
     PRIMARY KEY (idpatient),
     FOREIGN KEY (idmedecin) REFERENCES medecin(idmedecin)
 );
+
 CREATE TABLE professions (
     idprofession INT(3) NOT NULL AUTO_INCREMENT,
     libelle VARCHAR(50) NOT NULL,
@@ -71,6 +72,7 @@ CREATE TABLE personne (
 );
 
 
+INSERT INTO professions VALUES (null, 'Medecin-generaliste');
 INSERT INTO professions VALUES (null, 'Cardiologue');
 INSERT INTO professions VALUES (null, 'Dentiste');
 INSERT INTO professions VALUES (null, 'Dermatologue');
@@ -111,10 +113,10 @@ INSERT INTO professions VALUES (null, 'Pharmacien');
 INSERT INTO professions VALUES (null, 'Psychomotricien');
 INSERT INTO professions VALUES (null, 'Autre');
 
-INSERT INTO personne VALUES (null, 'Walker', 'Maxence', 'mwalker@gmail.com', 'Superb@pt95!', '0615141213', 'Patient');
-INSERT INTO personne VALUES (null, 'Wilkosz', 'Matthieu', 'mwilkosz@gmail.com', 'Superb@pt95!', '0615141213', 'Medecin');
-INSERT INTO personne VALUES (null, 'Lucbert', 'Baptiste', 'blucbert@gmail.com', 'Superb@pt95!', '0615141213', 'Admin');
-INSERT INTO personne VALUES (null, 'Youssoufa', 'Ilyes', 'iyoussoufa@gmail.com', 'Superb@pt95!', '0615141213', 'Admin');
+INSERT INTO personne VALUES (null, 'Walker', 'Maxence', 'mwalker@gmail.com', '123456789', '0615141213', 'Patient');
+INSERT INTO personne VALUES (null, 'Wilkosz', 'Matthieu', 'mwilkosz@gmail.com', '123456789', '0615141213', 'Medecin');
+INSERT INTO personne VALUES (null, 'Lucbert', 'Baptiste', 'blucbert@gmail.com', '123456789', '0615141213', 'Admin');
+INSERT INTO personne VALUES (null, 'Youssoufa', 'Ilyes', 'iyoussoufa@gmail.com', '123456789', '0615141213', 'Admin');
 
 INSERT INTO medecin VALUES (null, 'Dupont', 'Jean', 'jean.dupont@example.com', '0123456789', 1, 'Faculte de Paris');
 INSERT INTO medecin VALUES (null, 'Martin', 'Sophie', 'sophie.martin@example.com', '0234567890', 2, 'Faculte de Lyon');

@@ -160,13 +160,31 @@ public class Controleur {
         Modele.updatePrescription(unePrescription);
     }
 
-    /******************* Specialités *******************/
-    public static ArrayList<String> selectAllSpecialites() {
-        return Modele.selectAllSpecialites();
+    /******************* Professions *******************/
+    public static String[] selectAllProfessions() {
+        return Modele.selectAllProfessions();
     }
 
-    /******************* Professions *******************/
-    public static ArrayList<String> selectAllProfessions() {
-        return Modele.selectAllProfessions();
+
+
+
+
+
+
+
+    public static Object selectProfession(int idprofession) {
+        return Modele.selectProfession(idprofession);
+    }
+
+    public static Medecin selectWhereMedecin(int idMedecin) {
+        return Modele.selectWhereMedecin(idMedecin);
+    }
+
+    public static Patient selectWherePatient(int idpatient) {
+        return Modele.selectWherePatient(idpatient);
+    }
+
+    public static Profession selectWhereProfession(int idprofession) {
+        return Modele.selectWhereProfession(idprofession);
     }
 }
